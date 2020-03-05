@@ -23,6 +23,7 @@ Route::get('/home', 'HomeController@index');
 Route::group(['middleware'=>'Admin'],function(){
     
  Route::resource("/admin/users","AdminUserController");
+ Route::resource("/admin/posts","AdminPostController");
 
 });
 Route::get("/admin",function(){
