@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
-
+Route::get("/post/{id}","AdminPostController@post");
 
 Route::group(['middleware'=>'Admin'],function(){
     
@@ -28,6 +28,9 @@ Route::group(['middleware'=>'Admin'],function(){
  Route::resource("/admin/media","AdminMediaController");
  
 //  Route::get("/admin/medias/upload",['as'=>'admin.media.upload','uses'=>"AdminMediaController@upload"]);
+Route::resource("/admin/comments",'PostCommentController');
+Route::resource("/admin/comment/replies","CommentReplyController");
+
 });
 Route::get("/admin",function(){
 
