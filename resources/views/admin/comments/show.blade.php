@@ -28,7 +28,6 @@
             <td>{{$comment->email}}</td>
             <td>{{$comment->body}}</td>
             <td><a href="{{ route('home.post',$comment->post_id)}}">View Post</a></td>
-            <td><a href="{{ route('home.replies',$comment->id) }}">View Reply</a></td>
             <td>
                 @if($comment->is_active===1)
                     {!! Form::open(['method'=>'PATCH','action'=>['PostCommentController@update',$comment->id]]) !!}

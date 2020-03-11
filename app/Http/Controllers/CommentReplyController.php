@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Reply;
+use App\Comment;
 
 use App\Http\Requests;
 
@@ -16,7 +20,17 @@ class CommentReplyController extends Controller
     public function index()
     {
         //
-       
+        return "it workds";
+    }
+
+    public function Replies($id)
+    {
+         $comment=Comment::findOrFail($id);
+         $replies=$comment->replies;
+
+         return view("admin.comments.replies.show",compact('replies'));
+
+
     }
 
     /**
@@ -37,8 +51,27 @@ class CommentReplyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return "its works";
     }
+
+    public function CreateReply(Request $request)
+    {
+        $user=Auth::user();
+
+        $data=[
+            'comment_id' =>$request->comment_id,
+            'author'     =>$user->name,
+            'file'       =>$user->photo->file,
+            'email'      =>$user->email,
+            'body'       =>$request->body,
+
+        ];
+        
+        Reply::create($data);
+        Session::flash("reply_created","You replied to comment successfully");
+        return redirect()->back();
+    }
+    
 
     /**
      * Display the specified resource.
@@ -72,6 +105,11 @@ class CommentReplyController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $reply=Reply::findOrFail($id);
+
+        $reply->update($request->all());
+
+        return redirect()->back();
     }
 
     /**
@@ -83,5 +121,11 @@ class CommentReplyController extends Controller
     public function destroy($id)
     {
         //
+        $reply=Reply::findOrFail($id);
+
+        $reply->delete();
+
+        Session::flash("reply_deleted","your reply has been deleted");
+        return redirect()->back();
     }
 }

@@ -3,13 +3,13 @@
 
 @section("content")
 
-@if(Session::has('Deleted_cmt'))
+@if(Session::has('reply_deleted'))
 
-<p class="alert alert-info">{{ Session('Deleted_cmt')}}</p>
+<p class="alert alert-info">{{ Session('reply_deleted')}}</p>
 @endif
 
-@if(count($comments)>0)
-<h2>Comments</h2>
+@if(count($replies)>0)
+<h2>Replies</h2>
 
 <table class="table table-hover">
     <thead>
@@ -21,24 +21,23 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($comments as $comment)
+        @foreach($replies as $reply)
         <tr>
-            <td>{{$comment->id}}</td>
-            <td>{{$comment->author}}</td>
-            <td>{{$comment->email}}</td>
-            <td>{{$comment->body}}</td>
-            <td><a href="{{ route('home.post',$comment->post_id)}}">View Post</a></td>
-            <td><a href="{{ route('home.replies',$comment->id) }}">View Reply</a></td>
+            <td>{{$reply->id}}</td>
+            <td>{{$reply->author}}</td>
+            <td>{{$reply->email}}</td>
+            <td>{{$reply->body}}</td>
+            
             <td>
-                @if($comment->is_active===1)
-                    {!! Form::open(['method'=>'PATCH','action'=>['PostCommentController@update',$comment->id]]) !!}
+                @if($reply->is_active===1)
+                    {!! Form::open(['method'=>'PATCH','action'=>['CommentReplyController@update',$reply->id]]) !!}
 
                         {!! Form::hidden('is_active',0) !!}
                         {!! Form::submit('Un-Approve',['class'=>'btn btn-success']) !!}
 
                     {!! Form::close() !!}
                 @else
-                    {!! Form::open(['method'=>'PATCH','action'=>['PostCommentController@update',$comment->id]]) !!}
+                    {!! Form::open(['method'=>'PATCH','action'=>['CommentReplyController@update',$reply->id]]) !!}
 
                     {!! Form::hidden('is_active',1) !!}
                     {!! Form::submit('Approve',['class'=>'btn btn-info']) !!}
@@ -49,7 +48,7 @@
             </td>
 
             <td>
-                {!! Form::open(['method'=>'DELETE','action'=>['PostCommentController@destroy',$comment->id]]) !!}
+                {!! Form::open(['method'=>'DELETE','action'=>['CommentReplyController@destroy',$reply->id]]) !!}
                     {!! Form::submit('DELETE',['class'=>'btn btn-danger']) !!}
                 {!! Form::close() !!}
             </td>
@@ -60,7 +59,7 @@
 
 @else
 
-<h2 class="text-center">No Comments</h2>
+<h2 class="text-center">No Replies</h2>
 
 @endif
 @endsection

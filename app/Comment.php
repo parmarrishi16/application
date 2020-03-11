@@ -11,7 +11,8 @@ class Comment extends Model
     protected $fillable=[
         'post_id',
         'is_active',
-        'title',
+        'author',
+        'file',
         'email',
         'body'
     ];

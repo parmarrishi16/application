@@ -4,7 +4,7 @@
 @section("content")
 
 <h2>Post Index page</h2>
-<table class="table table-bordered table-hover">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>Id</th>
@@ -30,6 +30,8 @@
                         <td>{{$post->body}}</td>
                         <td>{{$post->created_at->diffForHumans()}}</td>
                         <td>{{$post->updated_at->diffForHumans()}}</td>
+                        <td><a href="{{ route('home.post',$post->id)}}">View post</a></td>
+                        <td><a href="{{ route('admin.comments.show',$post->id)}}">View Comments</a></td>
                     </tr>
                 @endforeach
 
