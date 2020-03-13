@@ -1,4 +1,7 @@
 <?php
+if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
+    error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+}
 use App\User;
 use App\Post;
 /*
@@ -96,6 +99,8 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post("/comment/reply",'CommentReplyController@CreateReply');
     Route::get("/home/replies/{id}",['as'=>'home.replies','uses'=>'CommentReplyController@Replies']);
 });
+
+Route::post("/admin/delete/media","AdminMediaController@deleteMedia");
 
 // Route::get("/insert",function(){
 

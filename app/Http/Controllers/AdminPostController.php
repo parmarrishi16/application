@@ -84,10 +84,10 @@ class AdminPostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
         //
-        $post=Post::findOrFail($id);
+        $post=Post::findBySlugOrFail($slug);
         $categories=Category::pluck('name','id')->all();
         return view("admin.posts.edit",compact('categories','post'));
     }
@@ -141,9 +141,9 @@ class AdminPostController extends Controller
 
 
 
-    public function post($id)
+    public function post($slug)
     {
-        $post=Post::findOrFail($id);
+        $post=Post::findBySlugOrFail($slug);
 
          $comments=$post->comments->where('is_active',1);
 
